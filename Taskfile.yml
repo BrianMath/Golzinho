@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: '3'
+
+vars:
+  ANTLR: java -jar /usr/local/lib/antlr4/antlr-4.13.2-complete.jar
+
+tasks:
+  build:
+    cmds:
+      - "{{.ANTLR}} Golzinho.g4"
+      - javac *.java
+    # silent: true
+  
+  clean:
+    cmds:
+      - rm -rf .antlr/
+    silent: true
+
+  run */*:
+    vars:
+      DIR: '{{index .MATCH 0}}'
+    cmds:
+      - antlr {{.DIR}}/{{.DIR}}.g4
+      - javac {{.DIR}}/*.java
+    silent: true

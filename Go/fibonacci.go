@@ -1,7 +1,5 @@
 package main
 
-// import "fmt"
-
 func Fib(n int, z chan<- int) {
 	// if (n <= 1) {
 	// 	z <- n
@@ -23,4 +21,5 @@ func main() {
 	c0l := make(chan int)
 	go Fib(10, c0l)
 	u := <-c0l
+	// fmt.Println(u)
 }

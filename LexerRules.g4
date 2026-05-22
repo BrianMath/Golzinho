@@ -10,6 +10,7 @@ DOT            : '.';
 SEMICOLON      : ';';
 
 // Attribution operators
+ASSIGN         : '=';
 DECLARE_ASSIGN : ':=';
 RECEIVE        : '<-';
 
@@ -50,7 +51,6 @@ ID       : [_a-zA-Z][_a-zA-Z0-9]* ;
 INT      : '0' | [1-9][0-9]*;
 
 // Hidden tokens
-NEWLINE      : '\r'? '\n' ;
-LINE_COMMENT : '//' ~[\r\n]*; 
-STRING  : '"' ~[\r\n]* '"';
-WS           : [ \t]+ -> skip ;
+LINE_COMMENT : '//' ~[\r\n]* -> skip; 
+STRING       : '"' ~[\r\n]* '"';
+WS           : [ \t\n]+ -> skip ;

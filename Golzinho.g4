@@ -15,15 +15,17 @@ out        : '<-' CHAN ;
 
 stmtList   : (stmt SEMICOLON?)*;
 
+exprList   : expression (COMMA expression)*;
+
 stmt       : assign
 		   | goroutine
 		   ;
 
-assign     : ID DECLARE_ASSIGN channel
-		   | ID (DECLARE_ASSIGN | RECEIVE) expression
+assign     : assignChan
+		   | ID (DECLARE_ASSIGN | RECEIVE | ASSIGN) expression
 		   ;
 
-exprList   : expression (COMMA expression)*;
+assignChan : ID DECLARE_ASSIGN channel;
 
 expression : equality;
 
@@ -35,7 +37,7 @@ term       : factor ((PLUS | LESS) factor)*;
 
 factor     : unary ((MUL | DIV) unary)*;
 
-unary      : (LOGICAL_NOT | MINUS) unary
+unary      : (LOGICAL_NOT | MINUS | RECEIVE) unary
 		   | primary
 		   ;
 
@@ -45,6 +47,6 @@ primary    : INT
 		   | L_PAREN expression R_PAREN
 		   ;
 
-channel    : MAKE L_PAREN CHAN (COMMA INT)? TYPE R_PAREN ;
+channel    : MAKE L_PAREN CHAN TYPE (COMMA INT)? R_PAREN ;
 
 goroutine  : GO ID L_PAREN exprList? R_PAREN ;

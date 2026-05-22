@@ -1,1 +1,5 @@
 .antlr
+*.class
+*.tokens
+*.interp
+Golzinho*.java
