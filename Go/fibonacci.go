@@ -1,10 +1,10 @@
 package main
 
 func Fib(n int, z chan<- int) {
-	// if (n <= 1) {
-	// 	z <- n
-	// 	return
-	// }
+	if (n <= 1) {
+		z <- n
+		return
+	}
 
 	c1l := make(chan int)
 	c2l := make(chan int)
