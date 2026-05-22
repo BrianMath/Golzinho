@@ -19,6 +19,8 @@ exprList   : expression (COMMA expression)*;
 
 stmt       : assign
 		   | goroutine
+		   | if
+		   | return
 		   ;
 
 assign     : assignChan
@@ -33,7 +35,7 @@ equality   : comparison ((EQUAL | NOT_EQUAL) comparison)*;
 
 comparison : term ((GREATER | GREATER_EQUAL | LESS | LESS_EQUAL) term)*;
 
-term       : factor ((PLUS | LESS) factor)*;
+term       : factor ((PLUS | MINUS) factor)*;
 
 factor     : unary ((MUL | DIV) unary)*;
 
@@ -46,6 +48,16 @@ primary    : INT
 		   | ID
 		   | L_PAREN expression R_PAREN
 		   ;
+
+if         : IF L_PAREN expression R_PAREN L_BRACE stmtList R_BRACE (else | elseif)?
+		   | IF expression L_BRACE stmtList R_BRACE (else | elseif)?
+		   ;
+
+elseif     : ELSE if ;
+
+else       : ELSE L_BRACE stmtList R_BRACE ;
+
+return     : RETURN expression? SEMICOLON? ;
 
 channel    : MAKE L_PAREN CHAN TYPE (COMMA INT)? R_PAREN ;
 
