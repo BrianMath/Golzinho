@@ -1,26 +1,31 @@
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		// create a CharStream that reads from standard input
-		CharStream input = CharStreams.fromStream(System.in);
+		String inputFile = null;
 
-		// create a lexer that feeds off of input CharStream
+		if (args.length > 0) {
+			inputFile = args[0];
+		}
+
+		InputStream is = System.in;
+		if (inputFile != null) {
+			is = new FileInputStream(inputFile);
+		}
+
+		CharStream input = CharStreams.fromStream(is);
 		GolzinhoLexer lexer = new GolzinhoLexer(input);
-
-		// create a buffer of tokens pulled from the lexer
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
-
-		// create a parser that feeds off the tokens buffer
 		GolzinhoParser parser = new GolzinhoParser(tokens);
 		ParseTree tree = parser.program(); // begin parsing at init rule
 
-		// Create a generic parse tree walker that can trigger callbacks
 		ParseTreeWalker walker = new ParseTreeWalker();
-		// Walk the tree created during the parse, trigger callbacks
 		walker.walk(new Test(), tree);
 		System.out.println();
 	}
