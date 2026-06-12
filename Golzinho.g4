@@ -5,9 +5,11 @@ program    : package func* ;
 
 package    : PACKAGE ID ;
 
-func       : FUNC ID L_PAREN param? R_PAREN L_BRACE stmtList R_BRACE;
+func       : FUNC ID L_PAREN paramList R_PAREN L_BRACE stmtList R_BRACE;
 
-param      : ID (in | out)? TYPE (COMMA param)*;
+paramList  : (param (COMMA param)*)?;
+
+param      : ID (in | out)? TYPE;
 
 in		   : CHAN '<-' ;
 

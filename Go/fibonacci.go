@@ -17,6 +17,10 @@ func Fib(n int, z chan<- int) {
 	z <- (x + y)
 }
 
+func Fib1(n int, z chan<- int) {
+	return
+}
+
 func main() {
 	c0l := make(chan int)
 	go Fib(10, c0l)
